@@ -168,6 +168,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ----------------------------------------------------------------------
+       1.B BILINGUAL EN | ES LANGUAGE TOGGLE SWITCHER (BRIEF RULE 0.8)
+       ---------------------------------------------------------------------- */
+    const langToggleBtn = document.getElementById('lang-toggle-btn');
+    const langBtnEn = document.getElementById('lang-btn-en');
+    const langBtnEs = document.getElementById('lang-btn-es');
+    let currentLang = 'en'; // Default per brief: "Inglés primero"
+
+    const setLanguage = (lang) => {
+        currentLang = lang;
+        if (lang === 'en') {
+            langBtnEn?.classList.add('active');
+            langBtnEs?.classList.remove('active');
+            document.documentElement.lang = 'en';
+        } else {
+            langBtnEs?.classList.add('active');
+            langBtnEn?.classList.remove('active');
+            document.documentElement.lang = 'es';
+        }
+
+        const elements = document.querySelectorAll('[data-en][data-es]');
+        elements.forEach(el => {
+            const newText = el.getAttribute(`data-${lang}`);
+            if (newText) {
+                // If element contains HTML formatting or spans, use innerHTML
+                if (newText.includes('<') && newText.includes('>')) {
+                    el.innerHTML = newText;
+                } else {
+                    el.textContent = newText;
+                }
+            }
+        });
+    };
+
+    if (langToggleBtn) {
+        langToggleBtn.addEventListener('click', () => {
+            setLanguage(currentLang === 'en' ? 'es' : 'en');
+        });
+    }
+
+    /* ----------------------------------------------------------------------
        6. INTERACTIVE AI SERVICESBOT FLOATING ASSISTANT WIDGET
        ---------------------------------------------------------------------- */
     const botTrigger = document.getElementById('bot-trigger');
@@ -216,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 addMessage(chipText, 'user');
 
                 if (topic === 'agendar') {
-                    botReply(`📅 <strong>Proceso de Agendamiento Directo:</strong><br><br>Con gusto le coordinaremos una sesión de diagnóstico estratégico sin costo con nuestros directores.<br><br>Por favor indíquenos su <strong>compañía minera</strong> o complete el formulario rápido a continuación:`);
+                    botReply(`📅 <strong>Proceso de Agendamiento Directo:</strong><br><br>Con gusto le coordinaremos una sesión de diagnóstico estratégico sin costo de 48h.<br><br>Por favor indíquenos su <strong>compañía minera</strong> o complete el formulario a continuación:`);
                     setTimeout(() => {
                         addMessage(`
                             <div style="background: #f0f7ff; padding: 12px; border-radius: 12px; border: 1px solid #29c5e6;">
@@ -229,17 +269,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.getElementById('btn-bot-confirm-schedule')?.addEventListener('click', () => {
                             const comp = document.getElementById('bot-schedule-company')?.value || 'su compañía';
                             addMessage(`Confirmar para ${comp}`, 'user');
-                            botReply(`✅ <strong>¡Cita Solicitada con Éxito!</strong><br><br>Hemos asignado una solicitud prioritaria para <strong>${comp}</strong>. Un director estratégico se comunicará a su correo corporativo en menos de 2 horas. ¡Gracias por confiar en I2 Services S.A.S.!`);
+                            botReply(`✅ <strong>¡Cita Solicitada con Éxito!</strong><br><br>Hemos asignado una solicitud prioritaria para <strong>${comp}</strong>. Un director estratégico se comunicará a su correo corporativo en menos de 2 horas. ¡Gracias por confiar en i2 Services S.A.S.!`);
                         });
                     }, 800);
                 } else if (topic === 'paquetes') {
-                    botReply(`💼 <strong>Paquete Mensual (Producto Estrella):</strong><br><br>Ofrece gestión operativa diaria 24/7 en administración, contabilidad NIIF, nómina de geólogos y amparos ANM con reportes consolidados a su casa matriz (TSX/ASX).`);
+                    botReply(`💼 <strong>Paquete Mensual (Producto Principal):</strong><br><br>Ofrece gestión operativa diaria 24/7 en administración, contabilidad IFRS configurada, nómina de geólogos y amparos ANM con reportes consolidados a su junta directiva (TSX/ASX).`);
                 } else if (topic === 'anm') {
                     botReply(`⚖️ <strong>Defensa de Títulos ANM:</strong><br><br>Gestionamos la vigencia, pagos de canon superficiario, PTO y amparos administrativos ante la Agencia Nacional de Minería con 100% de cumplimiento.`);
                 } else if (topic === 'ifrs') {
-                    botReply(`📊 <strong>Auditorías IFRS / TSX:</strong><br><br>Contabilidad estructurada en SIIGO alineada a exigencias NIIF para pasar auditorías fiscales y de bolsa internacional sin observaciones.`);
+                    botReply(`📊 <strong>Auditorías IFRS / TSX / ASX:</strong><br><br>Contabilidad estructurada alineada a exigencias NIIF/IFRS internacionales para superar auditorías de bolsa sin observaciones.`);
                 } else if (topic === 'contacto') {
-                    botReply(`📞 <strong>Contacto Directo con Juntas Directivas:</strong><br><br><strong>Oficina:</strong> Carrera 43A #1sur-188, Edificio Davivienda Of. 610, Medellín.<br><strong>Línea Directa:</strong> +57 310 397 6421<br><strong>Email:</strong> contacto@i2services.co`);
+                    botReply(`📞 <strong>Contacto Directo:</strong><br><br><strong>Oficina:</strong> Torre Empresarial Davivienda, Oficinas 603-604, Cra. 43A #1 Sur 188, Medellín.<br><strong>Línea Directa:</strong> +57 310 397 6421<br><strong>Email:</strong> comunicaciones@i2services.co`);
                 }
             });
         });
@@ -256,16 +296,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const qLower = query.toLowerCase();
                 if (qLower.includes('agendar') || qLower.includes('cita') || qLower.includes('reunión') || qLower.includes('contacto')) {
-                    botReply(`📅 Con gusto le ayudamos a agendar su diagnóstico corporativo. Puede llamarnos directamente al <strong>+57 310 397 6421</strong> o dejarnos los datos de su compañía minera aquí.`);
+                    botReply(`📅 Con gusto le ayudamos a agendar su diagnóstico corporativo de 48h sin costo. Puede llamarnos directamente al <strong>+57 310 397 6421</strong> o enviarnos un correo a <strong>comunicaciones@i2services.co</strong>.`);
                 } else if (qLower.includes('precio') || qLower.includes('costo') || qLower.includes('tarifa')) {
-                    botReply(`💡 Estructuramos presupuestos a la medida según la etapa de su proyecto. El <strong>Diagnóstico Inicial (48h)</strong> es totalmente sin costo.`);
+                    botReply(`💡 Estructuramos presupuestos a la medida a costo de junior. El <strong>Diagnóstico Inicial (48h)</strong> es totalmente sin costo.`);
                 } else if (qLower.includes('donde') || qLower.includes('ubicacion') || qLower.includes('direccion')) {
-                    botReply(`🏢 Estamos ubicados en Medellín, Colombia: Carrera 43A #1sur-188, Edificio Empresarial Davivienda Oficina 610.`);
+                    botReply(`🏢 Estamos ubicados en Medellín, Colombia: Torre Empresarial Davivienda, Oficinas 603-604, Cra. 43A #1 Sur 188.`);
                 } else {
-                    botReply(`Gracias por su consulta sobre "<em>${query}</em>". I2 Services S.A.S. ofrece respaldo legal, contable NIIF y de relaciones corporativas en Colombia. ¿Desea que le agendemos una sesión directa con nuestros directores?`);
+                    botReply(`Gracias por su consulta sobre "<em>${query}</em>". i2 Services S.A.S. ofrece respaldo legal, contable IFRS y de relaciones corporativas en Colombia. ¿Desea agendar una sesión de diagnóstico privado?`);
                 }
             });
         }
     }
 
 });
+

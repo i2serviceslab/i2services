@@ -5,6 +5,7 @@ Thumbs.db
 # Backup Files
 *_backup.*
 *_CHECKPOINT_*
+*_BEFORE_BRIEF_REBUILD.*
 BACKUP_README.txt
 
 # Node / Temp
