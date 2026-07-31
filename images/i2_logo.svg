@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 100" width="100%" height="100%">
+  <!-- Definiciones para gradientes y consistencia visual -->
+  <defs>
+    <!-- Gradiente azul oscuro/grisáceo premium para los bloques del cuerpo -->
+    <linearGradient id="i2BlockGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+    
+    <!-- Gradiente cyan brillante para los puntos terminales -->
+    <linearGradient id="i2CyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F3FF" />
+      <stop offset="100%" stop-color="#08D2DE" />
+    </linearGradient>
+  </defs>
+
+  <g id="i2-services-logo">
+    <!-- ISOTIPO (Símbolo i2 de 16px de ancho por bloque) -->
+    <g id="isotipo">
+      <!-- 1. Letra "i" -->
+      <!-- Punto de la "i": Cuadrado Cyan Brillante (16x16 px) -->
+      <rect x="0" y="0" width="16" height="16" rx="2" fill="url(#i2CyanGrad)" />
+      
+      <!-- Cuerpo de la "i": Bloque Vertical Azul Oscuro (16x76 px) -->
+      <rect x="0" y="24" width="16" height="76" rx="3" fill="url(#i2BlockGrad)" />
+      
+      <!-- 2. Número "2" (Estructura blocky alineada a grilla) -->
+      <!-- Barra superior horizontal (y=24, w=48, h=16) -->
+      <rect x="32" y="24" width="48" height="16" rx="3" fill="url(#i2BlockGrad)" />
+      
+      <!-- Enlace vertical superior derecho (y=40, w=16, h=16) -->
+      <rect x="64" y="40" width="16" height="16" rx="2" fill="url(#i2BlockGrad)" />
+      
+      <!-- Barra central horizontal (y=56, w=48, h=16) -->
+      <rect x="32" y="56" width="48" height="16" rx="3" fill="url(#i2BlockGrad)" />
+      
+      <!-- Enlace vertical inferior izquierdo (y=72, w=16, h=16) -->
+      <rect x="32" y="72" width="16" height="16" rx="2" fill="url(#i2BlockGrad)" />
+      
+      <!-- Barra inferior horizontal izquierda (y=88, w=32, h=16) -->
+      <rect x="32" y="88" width="32" height="16" rx="3" fill="url(#i2BlockGrad)" />
+      
+      <!-- Extremo inferior derecho terminal: Cuadrado Cyan Brillante (y=88, w=16, h=16) -->
+      <rect x="64" y="88" width="16" height="16" rx="2" fill="url(#i2CyanGrad)" />
+    </g>
+
+    <!-- LOGOTIPO (Texto a la derecha) -->
+    <g id="texto-marca">
+      <!-- Palabra principal: "Services" en azul oscuro, estilo negrita premium -->
+      <text x="96" y="56" 
+            font-family="Outfit, 'Inter', sans-serif" 
+            font-size="36" 
+            font-weight="900" 
+            letter-spacing="-0.02em" 
+            fill="#0F172A">Services</text>
+            
+      <!-- Subtítulo: "s.a.s." alineado inferiormente, con espaciado amplio -->
+      <text x="98" y="84" 
+            font-family="Outfit, 'Inter', sans-serif" 
+            font-size="20" 
+            font-weight="600" 
+            letter-spacing="0.28em" 
+            fill="#0F172A">S.A.S.</text>
+    </g>
+  </g>
+</svg>

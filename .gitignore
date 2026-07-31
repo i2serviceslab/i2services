@@ -1,0 +1,13 @@
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Backup Files
+*_backup.*
+*_CHECKPOINT_*
+BACKUP_README.txt
+
+# Node / Temp
+node_modules/
+npm-debug.log
+.env
