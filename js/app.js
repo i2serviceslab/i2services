@@ -187,11 +187,11 @@ document.addEventListener('DOMContentLoaded', () => {
             document.documentElement.lang = 'es';
         }
 
+        // Update text nodes
         const elements = document.querySelectorAll('[data-en][data-es]');
         elements.forEach(el => {
             const newText = el.getAttribute(`data-${lang}`);
             if (newText) {
-                // If element contains HTML formatting or spans, use innerHTML
                 if (newText.includes('<') && newText.includes('>')) {
                     el.innerHTML = newText;
                 } else {
@@ -199,7 +199,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
+
+        // Update form input placeholders if provided
+        const inputs = document.querySelectorAll('[data-placeholder-en][data-placeholder-es]');
+        inputs.forEach(input => {
+            const ph = input.getAttribute(`data-placeholder-${lang}`);
+            if (ph) input.placeholder = ph;
+        });
     };
+
+    // Run setLanguage('en') on page load to guarantee English by default
+    setLanguage('en');
 
     if (langToggleBtn) {
         langToggleBtn.addEventListener('click', () => {
@@ -256,30 +266,54 @@ document.addEventListener('DOMContentLoaded', () => {
                 addMessage(chipText, 'user');
 
                 if (topic === 'agendar') {
-                    botReply(`📅 <strong>Proceso de Agendamiento Directo:</strong><br><br>Con gusto le coordinaremos una sesión de diagnóstico estratégico sin costo de 48h.<br><br>Por favor indíquenos su <strong>compañía minera</strong> o complete el formulario a continuación:`);
+                    if (currentLang === 'en') {
+                        botReply(`📅 <strong>Direct Booking Process:</strong><br><br>We will gladly coordinate a free 48h strategic diagnostic session for your team.<br><br>Please enter your <strong>mining company name</strong> below:`);
+                    } else {
+                        botReply(`📅 <strong>Proceso de Agendamiento Directo:</strong><br><br>Con gusto le coordinaremos una sesión de diagnóstico estratégico sin costo de 48h.<br><br>Por favor indíquenos su <strong>compañía minera</strong> a continuación:`);
+                    }
                     setTimeout(() => {
                         addMessage(`
                             <div style="background: #f0f7ff; padding: 12px; border-radius: 12px; border: 1px solid #29c5e6;">
-                                <strong style="color:#1d68a6; display:block; margin-bottom:8px;">Agendar Cita Directa:</strong>
-                                <input type="text" id="bot-schedule-company" placeholder="Nombre de su Compañía" style="width:100%; padding:8px; margin-bottom:8px; border-radius:6px; border:1px solid #ccc;">
-                                <button id="btn-bot-confirm-schedule" style="background:#1d68a6; color:white; border:none; padding:8px 14px; border-radius:18px; font-weight:800; cursor:pointer; width:100%;">Confirmar Agendamiento <i class="fa-solid fa-check"></i></button>
+                                <strong style="color:#1d68a6; display:block; margin-bottom:8px;">${currentLang === 'en' ? 'Book Direct Session:' : 'Agendar Cita Directa:'}</strong>
+                                <input type="text" id="bot-schedule-company" placeholder="${currentLang === 'en' ? 'Company Name' : 'Nombre de su Compañía'}" style="width:100%; padding:8px; margin-bottom:8px; border-radius:6px; border:1px solid #ccc;">
+                                <button id="btn-bot-confirm-schedule" style="background:#1d68a6; color:white; border:none; padding:8px 14px; border-radius:18px; font-weight:800; cursor:pointer; width:100%;">${currentLang === 'en' ? 'Confirm Session' : 'Confirmar Agendamiento'} <i class="fa-solid fa-check"></i></button>
                             </div>
                         `, 'bot');
 
                         document.getElementById('btn-bot-confirm-schedule')?.addEventListener('click', () => {
-                            const comp = document.getElementById('bot-schedule-company')?.value || 'su compañía';
-                            addMessage(`Confirmar para ${comp}`, 'user');
-                            botReply(`✅ <strong>¡Cita Solicitada con Éxito!</strong><br><br>Hemos asignado una solicitud prioritaria para <strong>${comp}</strong>. Un director estratégico se comunicará a su correo corporativo en menos de 2 horas. ¡Gracias por confiar en i2 Services S.A.S.!`);
+                            const comp = document.getElementById('bot-schedule-company')?.value || 'your company';
+                            addMessage(`Confirm for ${comp}`, 'user');
+                            if (currentLang === 'en') {
+                                botReply(`✅ <strong>Session Requested Successfully!</strong><br><br>Priority request registered for <strong>${comp}</strong>. An executive director will reach out to your corporate email within 2 hours. Thank you for choosing i2 Services S.A.S.!`);
+                            } else {
+                                botReply(`✅ <strong>¡Cita Solicitada con Éxito!</strong><br><br>Hemos asignado una solicitud prioritaria para <strong>${comp}</strong>. Un director estratégico se comunicará a su correo corporativo en menos de 2 horas. ¡Gracias por confiar en i2 Services S.A.S.!`);
+                            }
                         });
                     }, 800);
                 } else if (topic === 'paquetes') {
-                    botReply(`💼 <strong>Paquete Mensual (Producto Principal):</strong><br><br>Ofrece gestión operativa diaria 24/7 en administración, contabilidad IFRS configurada, nómina de geólogos y amparos ANM con reportes consolidados a su junta directiva (TSX/ASX).`);
+                    if (currentLang === 'en') {
+                        botReply(`💼 <strong>Monthly Retainer (Core Product):</strong><br><br>24/7 daily back-office operations: corporate legal, IFRS accounting, geology payroll, and ANM title standing with consolidated monthly board reporting (TSX/ASX).`);
+                    } else {
+                        botReply(`💼 <strong>Paquete Mensual (Producto Principal):</strong><br><br>Ofrece gestión operativa diaria 24/7 en administración, contabilidad IFRS configurada, nómina de geólogos y amparos ANM con reportes consolidados a su junta directiva (TSX/ASX).`);
+                    }
                 } else if (topic === 'anm') {
-                    botReply(`⚖️ <strong>Defensa de Títulos ANM:</strong><br><br>Gestionamos la vigencia, pagos de canon superficiario, PTO y amparos administrativos ante la Agencia Nacional de Minería con 100% de cumplimiento.`);
+                    if (currentLang === 'en') {
+                        botReply(`⚖️ <strong>ANM Mining Title Defense:</strong><br><br>We manage title standing, surface fee payments, PTO filings, and administrative defense before the National Mining Agency (ANM) with 100% compliance.`);
+                    } else {
+                        botReply(`⚖️ <strong>Defensa de Títulos ANM:</strong><br><br>Gestionamos la vigencia, pagos de canon superficiario, PTO y amparos administrativos ante la Agencia Nacional de Minería con 100% de cumplimiento.`);
+                    }
                 } else if (topic === 'ifrs') {
-                    botReply(`📊 <strong>Auditorías IFRS / TSX / ASX:</strong><br><br>Contabilidad estructurada alineada a exigencias NIIF/IFRS internacionales para superar auditorías de bolsa sin observaciones.`);
+                    if (currentLang === 'en') {
+                        botReply(`📊 <strong>IFRS / TSX / ASX Audits:</strong><br><br>Configured accounting systems fully aligned with international IFRS standards to pass tax and stock exchange audits seamlessly.`);
+                    } else {
+                        botReply(`📊 <strong>Auditorías IFRS / TSX / ASX:</strong><br><br>Contabilidad estructurada alineada a exigencias NIIF/IFRS internacionales para superar auditorías de bolsa sin observaciones.`);
+                    }
                 } else if (topic === 'contacto') {
-                    botReply(`📞 <strong>Contacto Directo:</strong><br><br><strong>Oficina:</strong> Torre Empresarial Davivienda, Oficinas 603-604, Cra. 43A #1 Sur 188, Medellín.<br><strong>Línea Directa:</strong> +57 310 397 6421<br><strong>Email:</strong> comunicaciones@i2services.co`);
+                    if (currentLang === 'en') {
+                        botReply(`📞 <strong>Direct Contact:</strong><br><br><strong>Office:</strong> Davivienda Business Tower, Suites 603-604, Cra. 43A #1 Sur 188, Medellín, Colombia.<br><strong>Phone:</strong> +57 310 397 6421<br><strong>Email:</strong> comunicaciones@i2services.co`);
+                    } else {
+                        botReply(`📞 <strong>Contacto Directo:</strong><br><br><strong>Oficina:</strong> Torre Empresarial Davivienda, Oficinas 603-604, Cra. 43A #1 Sur 188, Medellín.<br><strong>Línea Directa:</strong> +57 310 397 6421<br><strong>Email:</strong> comunicaciones@i2services.co`);
+                    }
                 }
             });
         });
@@ -295,14 +329,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 botUserInput.value = '';
 
                 const qLower = query.toLowerCase();
-                if (qLower.includes('agendar') || qLower.includes('cita') || qLower.includes('reunión') || qLower.includes('contacto')) {
-                    botReply(`📅 Con gusto le ayudamos a agendar su diagnóstico corporativo de 48h sin costo. Puede llamarnos directamente al <strong>+57 310 397 6421</strong> o enviarnos un correo a <strong>comunicaciones@i2services.co</strong>.`);
-                } else if (qLower.includes('precio') || qLower.includes('costo') || qLower.includes('tarifa')) {
-                    botReply(`💡 Estructuramos presupuestos a la medida a costo de junior. El <strong>Diagnóstico Inicial (48h)</strong> es totalmente sin costo.`);
-                } else if (qLower.includes('donde') || qLower.includes('ubicacion') || qLower.includes('direccion')) {
-                    botReply(`🏢 Estamos ubicados en Medellín, Colombia: Torre Empresarial Davivienda, Oficinas 603-604, Cra. 43A #1 Sur 188.`);
+                if (qLower.includes('agendar') || qLower.includes('book') || qLower.includes('cita') || qLower.includes('reunión') || qLower.includes('contact')) {
+                    if (currentLang === 'en') {
+                        botReply(`📅 We will gladly schedule a free 48h diagnostic session. Call us directly at <strong>+57 310 397 6421</strong> or email <strong>comunicaciones@i2services.co</strong>.`);
+                    } else {
+                        botReply(`📅 Con gusto le ayudamos a agendar su diagnóstico corporativo de 48h sin costo. Puede llamarnos directamente al <strong>+57 310 397 6421</strong> o enviarnos un correo a <strong>comunicaciones@i2services.co</strong>.`);
+                    }
+                } else if (qLower.includes('precio') || qLower.includes('cost') || qLower.includes('tarifa') || qLower.includes('price')) {
+                    if (currentLang === 'en') {
+                        botReply(`💡 We build tailored budgets at junior cost. The <strong>Initial Diagnostic (48h)</strong> is completely free.`);
+                    } else {
+                        botReply(`💡 Estructuramos presupuestos a la medida a costo de junior. El <strong>Diagnóstico Inicial (48h)</strong> es totalmente sin costo.`);
+                    }
+                } else if (qLower.includes('donde') || qLower.includes('where') || qLower.includes('address') || qLower.includes('ubicacion')) {
+                    botReply(`🏢 Davivienda Business Tower, Suites 603-604, Cra. 43A #1 Sur 188, Medellín, Colombia.`);
                 } else {
-                    botReply(`Gracias por su consulta sobre "<em>${query}</em>". i2 Services S.A.S. ofrece respaldo legal, contable IFRS y de relaciones corporativas en Colombia. ¿Desea agendar una sesión de diagnóstico privado?`);
+                    if (currentLang === 'en') {
+                        botReply(`Thank you for your inquiry about "<em>${query}</em>". i2 Services S.A.S. provides legal, IFRS accounting, and corporate governance backing in Colombia. Would you like to schedule a private diagnostic?`);
+                    } else {
+                        botReply(`Gracias por su consulta sobre "<em>${query}</em>". i2 Services S.A.S. ofrece respaldo legal, contable IFRS y de relaciones corporativas en Colombia. ¿Desea agendar una sesión de diagnóstico privado?`);
+                    }
                 }
             });
         }
