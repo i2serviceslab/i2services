@@ -914,9 +914,19 @@ ul { list-style: none; }
 }
 
 .comms-hybrid-section .db-search-pill-center {
-    background: rgba(41, 197, 230, 0.12);
-    border: 1px solid rgba(41, 197, 230, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin-bottom: 14px;
     color: #29c5e6;
+    font-size: 0.88rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
 }
 
 .comms-hybrid-section .brochure-underline {
