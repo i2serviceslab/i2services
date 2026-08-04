@@ -104,14 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Enable Horizontal Wheel Scroll when hovering over cards
-        commsSliderTrack.addEventListener('wheel', (e) => {
-            if (e.deltaY !== 0) {
-                e.preventDefault();
-                commsSliderTrack.scrollLeft += e.deltaY;
-            }
-        }, { passive: false });
-
         // Scroll Sync Handler: Update Active Card & Nav Pill on Scroll
         let isTicking = false;
         const updateActiveOnScroll = () => {
