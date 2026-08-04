@@ -267,9 +267,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (topic === 'agendar') {
                     if (currentLang === 'en') {
-                        botReply(`📅 <strong>Direct Booking Process:</strong><br><br>We will gladly coordinate a free 48h strategic diagnostic session for your team.<br><br>Please enter your <strong>mining company name</strong> below:`);
+                        botReply(`📅 <strong>Direct Booking Process:</strong><br><br>We will gladly coordinate a strategic diagnostic session for your team.<br><br>Please enter your <strong>mining company name</strong> below:`);
                     } else {
-                        botReply(`📅 <strong>Proceso de Agendamiento Directo:</strong><br><br>Con gusto le coordinaremos una sesión de diagnóstico estratégico sin costo de 48h.<br><br>Por favor indíquenos su <strong>compañía minera</strong> a continuación:`);
+                        botReply(`📅 <strong>Proceso de Agendamiento Directo:</strong><br><br>Con gusto le coordinaremos una sesión de diagnóstico estratégico para su equipo.<br><br>Por favor indíquenos su <strong>compañía minera</strong> a continuación:`);
                     }
                     setTimeout(() => {
                         addMessage(`
@@ -331,15 +331,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const qLower = query.toLowerCase();
                 if (qLower.includes('agendar') || qLower.includes('book') || qLower.includes('cita') || qLower.includes('reunión') || qLower.includes('contact')) {
                     if (currentLang === 'en') {
-                        botReply(`📅 We will gladly schedule a free 48h diagnostic session. Call us directly at <strong>+57 310 397 6421</strong> or email <strong>comunicaciones@i2services.co</strong>.`);
+                        botReply(`📅 We will gladly schedule a diagnostic session. Call us directly at <strong>+57 310 397 6421</strong> or email <strong>comunicaciones@i2services.co</strong>.`);
                     } else {
-                        botReply(`📅 Con gusto le ayudamos a agendar su diagnóstico corporativo de 48h sin costo. Puede llamarnos directamente al <strong>+57 310 397 6421</strong> o enviarnos un correo a <strong>comunicaciones@i2services.co</strong>.`);
+                        botReply(`📅 Con gusto le ayudamos a agendar su diagnóstico corporativo. Puede llamarnos directamente al <strong>+57 310 397 6421</strong> o enviarnos un correo a <strong>comunicaciones@i2services.co</strong>.`);
                     }
                 } else if (qLower.includes('precio') || qLower.includes('cost') || qLower.includes('tarifa') || qLower.includes('price')) {
                     if (currentLang === 'en') {
-                        botReply(`💡 We build tailored budgets at junior cost. The <strong>Initial Diagnostic (48h)</strong> is completely free.`);
+                        botReply(`💡 We build tailored budgets at junior cost suited for exploration companies.`);
                     } else {
-                        botReply(`💡 Estructuramos presupuestos a la medida a costo de junior. El <strong>Diagnóstico Inicial (48h)</strong> es totalmente sin costo.`);
+                        botReply(`💡 Estructuramos presupuestos a la medida a costo de junior adaptados a su compañía.`);
                     }
                 } else if (qLower.includes('donde') || qLower.includes('where') || qLower.includes('address') || qLower.includes('ubicacion')) {
                     botReply(`🏢 Davivienda Business Tower, Suites 603-604, Cra. 43A #1 Sur 188, Medellín, Colombia.`);

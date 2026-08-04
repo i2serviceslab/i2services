@@ -12,3 +12,6 @@ BACKUP_README.txt
 node_modules/
 npm-debug.log
 .env
+*.mp3
+*.wav
+
