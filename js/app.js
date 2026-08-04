@@ -292,9 +292,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     }, 800);
                 } else if (topic === 'paquetes') {
                     if (currentLang === 'en') {
-                        botReply(`💼 <strong>Monthly Retainer (Core Product):</strong><br><br>24/7 daily back-office operations: corporate legal, IFRS accounting, geology payroll, and ANM title standing with consolidated monthly board reporting (TSX/ASX).`);
+                        botReply(`💼 <strong>Monthly Retainer (Core Product):</strong><br><br>Daily back-office operations: corporate legal, IFRS accounting, geology payroll, and ANM title standing with consolidated monthly board reporting (TSX/ASX).`);
                     } else {
-                        botReply(`💼 <strong>Paquete Mensual (Producto Principal):</strong><br><br>Ofrece gestión operativa diaria 24/7 en administración, contabilidad IFRS configurada, nómina de geólogos y amparos ANM con reportes consolidados a su junta directiva (TSX/ASX).`);
+                        botReply(`💼 <strong>Paquete Mensual (Producto Principal):</strong><br><br>Ofrece gestión operativa diaria en administración, contabilidad IFRS configurada, nómina de geólogos y amparos ANM con reportes consolidados a su junta directiva (TSX/ASX).`);
                     }
                 } else if (topic === 'anm') {
                     if (currentLang === 'en') {
