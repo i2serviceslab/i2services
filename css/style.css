@@ -991,18 +991,38 @@ ul { list-style: none; }
     margin: 0 auto;
 }
 
+.comms-horiz-nav-bar {
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.comms-horiz-nav-bar.is-dragging {
+    cursor: grabbing !important;
+    scroll-behavior: auto !important;
+}
+
 .comms-cards-slider-track {
     display: flex;
     gap: 28px;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     scroll-behavior: smooth;
     padding: 24px 80px;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
     /* EDGE FADE TRANSPARENCY EFFECT SO USER GLIMPSES NEXT/PREV CARDS */
     mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.comms-cards-slider-track.is-dragging {
+    cursor: grabbing !important;
+    scroll-behavior: auto !important;
+    scroll-snap-type: none !important;
 }
 
 .comms-cards-slider-track::-webkit-scrollbar {

@@ -104,6 +104,55 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // Helper: Click & Drag (Pointer Drag-to-Scroll)
+        const enableDragToScroll = (container) => {
+            if (!container) return;
+            let isDown = false;
+            let startX = 0;
+            let scrollLeft = 0;
+            let hasDragged = false;
+
+            container.addEventListener('mousedown', (e) => {
+                if (e.button !== 0) return;
+                isDown = true;
+                hasDragged = false;
+                container.classList.add('is-dragging');
+                startX = e.pageX - container.offsetLeft;
+                scrollLeft = container.scrollLeft;
+            });
+
+            container.addEventListener('mouseleave', () => {
+                isDown = false;
+                container.classList.remove('is-dragging');
+            });
+
+            container.addEventListener('mouseup', () => {
+                isDown = false;
+                container.classList.remove('is-dragging');
+            });
+
+            container.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                const x = e.pageX - container.offsetLeft;
+                const walk = (x - startX) * 1.6;
+                if (Math.abs(walk) > 6) {
+                    hasDragged = true;
+                }
+                container.scrollLeft = scrollLeft - walk;
+            });
+
+            container.addEventListener('click', (e) => {
+                if (hasDragged) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    hasDragged = false;
+                }
+            }, true);
+        };
+
+        enableDragToScroll(commsSliderTrack);
+        enableDragToScroll(commsNavTrack);
+
         // Scroll Sync Handler: Update Active Card & Nav Pill on Scroll
         let isTicking = false;
         const updateActiveOnScroll = () => {
