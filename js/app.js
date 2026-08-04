@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ----------------------------------------------------------------------
-       3. HORIZONTAL CARDS SLIDER WITH TRANSPARENCY PREVIEW FOR COMMS CATALOG
+       3. HORIZONTAL CARDS SLIDER WITH SCROLL SENSITIVE NAV FOR COMMS CATALOG
        ---------------------------------------------------------------------- */
     const commsNavPills = document.querySelectorAll('.horiz-nav-pill');
     const commsSliderTrack = document.getElementById('comms-cards-track');
@@ -63,11 +63,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (commsSliderTrack && commsCards.length) {
         
-        // Helper: Activate Card by Index
+        // Helper: Scroll Track to Center Card by Index
         const scrollToCard = (index) => {
             const targetCard = document.getElementById(`comms-card-${index}`);
             if (targetCard) {
-                targetCard.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                const cardLeft = targetCard.offsetLeft;
+                const cardWidth = targetCard.offsetWidth;
+                const trackWidth = commsSliderTrack.offsetWidth;
+                
+                commsSliderTrack.scrollTo({
+                    left: cardLeft - (trackWidth / 2) + (cardWidth / 2),
+                    behavior: 'smooth'
+                });
             }
         };
 
@@ -84,36 +91,57 @@ document.addEventListener('DOMContentLoaded', () => {
         // Arrow Buttons Click Events
         if (slideLeftBtn) {
             slideLeftBtn.addEventListener('click', () => {
-                commsSliderTrack.scrollBy({ left: -600, behavior: 'smooth' });
+                const currentScroll = commsSliderTrack.scrollLeft;
+                const cardWidth = commsCards[0].offsetWidth + 24;
+                commsSliderTrack.scrollTo({ left: currentScroll - cardWidth, behavior: 'smooth' });
             });
         }
         if (slideRightBtn) {
             slideRightBtn.addEventListener('click', () => {
-                commsSliderTrack.scrollBy({ left: 600, behavior: 'smooth' });
+                const currentScroll = commsSliderTrack.scrollLeft;
+                const cardWidth = commsCards[0].offsetWidth + 24;
+                commsSliderTrack.scrollTo({ left: currentScroll + cardWidth, behavior: 'smooth' });
             });
         }
 
-        // IntersectionObserver to Highlight Centered Active Card & Synced Tab Pill
-        const sliderObserverOptions = {
-            root: commsSliderTrack,
-            threshold: 0.55
-        };
+        // Enable Horizontal Wheel Scroll when hovering over cards
+        commsSliderTrack.addEventListener('wheel', (e) => {
+            if (e.deltaY !== 0) {
+                e.preventDefault();
+                commsSliderTrack.scrollLeft += e.deltaY;
+            }
+        }, { passive: false });
 
-        const sliderObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    commsCards.forEach(c => c.classList.remove('is-active'));
-                    entry.target.classList.add('is-active');
+        // Scroll Sync Handler: Update Active Card & Nav Pill on Scroll
+        let isTicking = false;
+        const updateActiveOnScroll = () => {
+            const trackCenter = commsSliderTrack.scrollLeft + (commsSliderTrack.offsetWidth / 2);
+            let closestCard = null;
+            let minDistance = Infinity;
 
-                    const activeId = entry.target.id;
-                    const indexStr = activeId.replace('comms-card-', '');
+            commsCards.forEach(card => {
+                const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+                const distance = Math.abs(trackCenter - cardCenter);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestCard = card;
+                }
+            });
 
-                    commsNavPills.forEach(pill => {
-                        pill.classList.remove('is-active');
-                        if (pill.getAttribute('data-index') === indexStr) {
+            if (closestCard) {
+                commsCards.forEach(c => c.classList.remove('is-active'));
+                closestCard.classList.add('is-active');
+
+                const activeId = closestCard.id;
+                const indexStr = activeId.replace('comms-card-', '');
+
+                commsNavPills.forEach(pill => {
+                    if (pill.getAttribute('data-index') === indexStr) {
+                        if (!pill.classList.contains('is-active')) {
+                            commsNavPills.forEach(p => p.classList.remove('is-active'));
                             pill.classList.add('is-active');
 
-                            // Scroll active tab pill smoothly into center of top nav track
+                            // Center active pill in top nav bar smoothly
                             if (commsNavTrack) {
                                 const pillLeft = pill.offsetLeft;
                                 const pillWidth = pill.offsetWidth;
@@ -124,12 +152,21 @@ document.addEventListener('DOMContentLoaded', () => {
                                 });
                             }
                         }
-                    });
-                }
-            });
-        }, sliderObserverOptions);
+                    }
+                });
+            }
+            isTicking = false;
+        };
 
-        commsCards.forEach(card => sliderObserver.observe(card));
+        commsSliderTrack.addEventListener('scroll', () => {
+            if (!isTicking) {
+                window.requestAnimationFrame(updateActiveOnScroll);
+                isTicking = true;
+            }
+        });
+
+        // Run initial sync
+        updateActiveOnScroll();
     }
 
     /* ----------------------------------------------------------------------
