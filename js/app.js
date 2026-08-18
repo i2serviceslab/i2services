@@ -376,9 +376,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 } else if (topic === 'anm') {
                     if (currentLang === 'en') {
-                        botReply(`⚖️ <strong>ANM Mining Title Defense:</strong><br><br>We manage title standing, surface fee payments, PTO filings, and administrative defense before the National Mining Agency (ANM) with 100% compliance.`);
+                        botReply(`⚖️ <strong>ANM Mining Title Defense:</strong><br><br>We manage title standing, surface fee payments, PTO filings, and administrative defense before the National Mining Agency (ANM) with full regulatory compliance.`);
                     } else {
-                        botReply(`⚖️ <strong>Defensa de Títulos ANM:</strong><br><br>Gestionamos la vigencia, pagos de canon superficiario, PTO y amparos administrativos ante la Agencia Nacional de Minería con 100% de cumplimiento.`);
+                        botReply(`⚖️ <strong>Defensa de Títulos ANM:</strong><br><br>Gestionamos la vigencia, pagos de canon superficiario, PTO y amparos administrativos ante la Agencia Nacional de Minería con pleno cumplimiento regulatorio.`);
                     }
                 } else if (topic === 'ifrs') {
                     if (currentLang === 'en') {
@@ -388,9 +388,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 } else if (topic === 'contacto') {
                     if (currentLang === 'en') {
-                        botReply(`📞 <strong>Direct Contact:</strong><br><br><strong>Office:</strong> Davivienda Business Tower, Suites 603-604, Cra. 43A #1 Sur 188, Medellín, Colombia.<br><strong>Phone:</strong> +57 310 397 6421<br><strong>Email:</strong> comunicaciones@i2services.co`);
+                        botReply(`📞 <strong>Direct Contact:</strong><br><br><strong>Office:</strong> Davivienda Business Tower, Suite 610, Cra. 43A #1 Sur 188, Medellín, Colombia.<br><strong>Phone:</strong> +57 310 397 6421<br><strong>Email:</strong> info@i2services.co`);
                     } else {
-                        botReply(`📞 <strong>Contacto Directo:</strong><br><br><strong>Oficina:</strong> Torre Empresarial Davivienda, Oficinas 603-604, Cra. 43A #1 Sur 188, Medellín.<br><strong>Línea Directa:</strong> +57 310 397 6421<br><strong>Email:</strong> comunicaciones@i2services.co`);
+                        botReply(`📞 <strong>Contacto Directo:</strong><br><br><strong>Oficina:</strong> Torre Empresarial Davivienda, Oficina 610, Cra. 43A #1 Sur 188, Medellín.<br><strong>Línea Directa:</strong> +57 310 397 6421<br><strong>Email:</strong> info@i2services.co`);
                     }
                 }
             });
@@ -409,9 +409,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const qLower = query.toLowerCase();
                 if (qLower.includes('agendar') || qLower.includes('book') || qLower.includes('cita') || qLower.includes('reunión') || qLower.includes('contact')) {
                     if (currentLang === 'en') {
-                        botReply(`📅 We will gladly schedule a diagnostic session. Call us directly at <strong>+57 310 397 6421</strong> or email <strong>comunicaciones@i2services.co</strong>.`);
+                        botReply(`📅 We will gladly schedule a diagnostic session. Call us directly at <strong>+57 310 397 6421</strong> or email <strong>info@i2services.co</strong>.`);
                     } else {
-                        botReply(`📅 Con gusto le ayudamos a agendar su diagnóstico corporativo. Puede llamarnos directamente al <strong>+57 310 397 6421</strong> o enviarnos un correo a <strong>comunicaciones@i2services.co</strong>.`);
+                        botReply(`📅 Con gusto le ayudamos a agendar su diagnóstico corporativo. Puede llamarnos directamente al <strong>+57 310 397 6421</strong> o enviarnos un correo a <strong>info@i2services.co</strong>.`);
                     }
                 } else if (qLower.includes('precio') || qLower.includes('cost') || qLower.includes('tarifa') || qLower.includes('price')) {
                     if (currentLang === 'en') {
@@ -420,7 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         botReply(`💡 Estructuramos presupuestos a la medida a costo de junior adaptados a su compañía.`);
                     }
                 } else if (qLower.includes('donde') || qLower.includes('where') || qLower.includes('address') || qLower.includes('ubicacion')) {
-                    botReply(`🏢 Davivienda Business Tower, Suites 603-604, Cra. 43A #1 Sur 188, Medellín, Colombia.`);
+                    botReply(`🏢 Davivienda Business Tower, Suite 610, Cra. 43A #1 Sur 188, Medellín, Colombia.`);
                 } else {
                     if (currentLang === 'en') {
                         botReply(`Thank you for your inquiry about "<em>${query}</em>". i2 Services S.A.S. provides legal, IFRS accounting, and corporate governance backing in Colombia. Would you like to schedule a private diagnostic?`);
